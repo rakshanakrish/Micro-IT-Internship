@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+<title>Tic-Tac-Toe Game</title>
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e053c6 0%, #9e10e0 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  #app {
+    background:#001f2a(255 255 255 / 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.37);
+    width: 320px;
+    max-width: 95vw;
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  h1 {
+    color: #ffffffcc;
+    text-align: center;
+    margin: 0 0 12px 0;
+    font-weight: 700;
+    font-size: 1.8rem;
+    user-select: none;
+  }
+  #turnIndicator {
+    color: #e0e0e0;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    min-height: 26px;
+    user-select: none;
+  }
+  #board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 12px;
+    flex-grow: 1;
+  }
+  .cell {
+    background: #ffffff33;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 4.5rem;
+    color: white;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    user-select: none;
+    box-shadow:
+      inset 0 0 6px rgba(255 255 255 / 0.5),
+      0 3px 7px rgba(0 0 0 / 0.2);
+  }
+  .cell:hover {
+    background: whitesmoke;
+  }
+  .cell.disabled {
+    cursor: not-allowed;
+    color: whitesmoke;
+    background: rgb(43, 237, 143);
+  }
+  /* Highlight winning cells */
+  .cell.winning {
+    background: linear-gradient(45deg, #ffd700, #ffa500);
+    color: #3b1700;
+    box-shadow:
+      0 0 15px 4px #ffb700,
+      inset 0 0 10px #ffce00;
+    cursor: default;
+  }
+
+  #resultMessage {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fffcc0;
+    min-height: 28px;
+    user-select: none;
+  }
+  #resetBtn {
+    margin-top: auto;
+    padding: 14px;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #3b1700;
+    background: linear-gradient(45deg, #ed8610, #edc32b);
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(255,183,0,0.6);
+    transition: background-color 0.25s ease, color 0.25s ease;
+    user-select: none;
+  }
+  #resetBtn:hover {
+    background: linear-gradient(45deg, #ffec70, #ffbf13);
+    color: #2a1100;
+  }
+
+  /* Mobile optimization: ensure board squares fit well */
+  @media (max-width: 350px) {
+    #app {
+      width: 95vw;
+      height: 95vh;
+      padding: 12px;
+    }
+    .cell {
+      font-size: 3.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="app" role="main" aria-label="Tic Tac Toe Game">
+    <h1>Tic-Tac-Toe</h1>
+    <div id="turnIndicator" aria-live="polite"></div>
+    <div id="board" role="grid" aria-label="Game Board">
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 1"></div>
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 2"></div>
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 3"></div>
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 4"></div>
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 5"></div>
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 6"></div>
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 7"></div>
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 8"></div>
+      <div class="cell" role="gridcell" tabindex="0" aria-label="Cell 9"></div>
+    </div>
+    <div id="resultMessage" aria-live="assertive"></div>
+    <button id="resetBtn" aria-label="Reset game">Restart Game</button>
+  </div>
+
+<script>
+  (() => {
+    const boardElement = document.getElementById('board');
+    const cells = Array.from(document.querySelectorAll('.cell'));
+    const turnIndicator = document.getElementById('turnIndicator');
+    const resultMessage = document.getElementById('resultMessage');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let boardState = Array(9).fill(null); // holds 'X' or 'O' or null
+    let xIsNext = true; // X plays first
+    let gameOver = false;
+
+    // Winning line combos (indices)
+    const winningLines = [
+      [0,1,2], [3,4,5], [6,7,8], // rows
+      [0,3,6], [1,4,7], [2,5,8], // cols
+      [0,4,8], [2,4,6]           // diagonals
+    ];
+
+    function updateTurnIndicator() {
+      if(gameOver) {
+        turnIndicator.textContent = '';
+        return;
+      }
+      turnIndicator.textContent = `Turn: ${xIsNext ? 'X' : 'O'}`;
+    }
+
+    function checkWinner() {
+      for (const line of winningLines) {
+        const [a,b,c] = line;
+        if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
+          return line;
+        }
+      }
+      return null;
+    }
+
+    function checkDraw() {
+      return boardState.every(cell => cell !== null);
+    }
+
+    function highlightWinningCells(cellsToHighlight) {
+      cellsToHighlight.forEach(idx => {
+        cells[idx].classList.add('winning');
+      });
+    }
+
+    function disableAllCells() {
+      cells.forEach(cell => {
+        cell.classList.add('disabled');
+        cell.setAttribute('aria-disabled', 'true');
+      });
+    }
+
+    function enableAllCells() {
+      cells.forEach(cell => {
+        cell.classList.remove('disabled', 'winning');
+        cell.removeAttribute('aria-disabled');
+      });
+    }
+
+    function handleCellClick(idx) {
+      if(gameOver || boardState[idx]) {
+        return;
+      }
+      boardState[idx] = xIsNext ? 'X' : 'O';
+      const xSVG = `<svg viewBox="0 0 100 100" width="80%" height="80%"><line x1="10" y1="10" x2="90" y2="90" stroke="white" stroke-width="10"/><line x1="90" y1="10" x2="10" y2="90" stroke="white" stroke-width="10"/></svg>`;
+      const oSVG = `<svg viewBox="0 0 100 100" width="80%" height="80%"><circle cx="50" cy="50" r="40" stroke="white" stroke-width="10" fill="none"/></svg>`;
+      cells[idx].innerHTML = boardState[idx] === 'X' ? xSVG : oSVG;
+      cells[idx].classList.add('disabled');
+      cells[idx].setAttribute('aria-label', `Cell ${idx + 1} marked with ${boardState[idx]}`);
+      xIsNext = !xIsNext;
+
+      const winningLine = checkWinner();
+      if(winningLine) {
+        gameOver = true;
+        highlightWinningCells(winningLine);
+        disableAllCells();
+        resultMessage.textContent = `Player ${boardState[winningLine[0]]} wins! 🎉`;
+        turnIndicator.textContent = '';
+        return;
+      }
+      if(checkDraw()) {
+        gameOver = true;
+        resultMessage.textContent = "It's a draw! 🤝";
+        turnIndicator.textContent = '';
+        return;
+      }
+      updateTurnIndicator();
+    }
+
+    // Keyboard accessibility: handle Enter or Space on cell to place mark
+    function handleCellKeyDown(event, idx) {
+      if(event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        handleCellClick(idx);
+      }
+    }
+
+    function resetGame() {
+      boardState.fill(null);
+      xIsNext = true;
+      gameOver = false;
+      cells.forEach((cell, idx) => {
+        cell.textContent = '';
+        cell.classList.remove('disabled', 'winning');
+        cell.setAttribute('aria-label', `Cell ${idx + 1} empty`);
+        cell.removeAttribute('aria-disabled');
+      });
+      resultMessage.textContent = '';
+      updateTurnIndicator();
+    }
+
+    // Initialize UI
+    updateTurnIndicator();
+
+    // Attach event listeners
+    cells.forEach((cell, idx) => {
+      cell.addEventListener('click', () => handleCellClick(idx));
+      cell.addEventListener('keydown', (evt) => handleCellKeyDown(evt, idx));
+      cell.setAttribute('aria-label', `Cell ${idx + 1} empty`);
+    });
+
+    resetBtn.addEventListener('click', resetGame);
+  })();
+</script>
+
+</body>
+</html>
