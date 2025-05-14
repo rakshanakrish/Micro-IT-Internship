@@ -1,4 +1,4 @@
-## 1. Sentimental_Bot
+# 1. Sentimental_Bot
 ```bash
 # Micro-IT-Internship
 
@@ -42,12 +42,12 @@ Before you begin, ensure you have met the following requirements:
 bash
 git clone https://github.com/rakshanakrish/Micro-IT-Internship.git
 ```
-# Install the required libraries (if you are using a local environment):
+## Install the required libraries (if you are using a local environment):
 
 ```bash
 pip install -r requirements.txt
 ```
-# Usage
+## Usage
 a)Running the Notebook:
 Open the Sentimental_Bot.ipynb notebook in Jupyter or Google Colab and run the cells sequentially.
 
@@ -57,7 +57,7 @@ Provide a text input (e.g., a sentence or paragraph) to see the sentiment predic
 c)Training the Model:
 The model will train on the given dataset. Once the model is trained, it will give you accuracy metrics on how well it performs.
 
-# Contributing
+## Contributing
 Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request. Here’s how you can contribute:
 
 a)Fork the repository
@@ -68,10 +68,10 @@ c)Make your changes
 
 d)Open a pull request
 
-# License
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 2. Tic-Tac-Toe Game
+# 2. Tic-Tac-Toe Game
 ```
 A responsive, accessible, and visually polished Tic-Tac-Toe game built with **HTML**, **CSS**, and **JavaScript**. Play as X or O, track the turn, highlight winning moves, and enjoy a smooth UI experience!
 
@@ -107,7 +107,7 @@ A responsive, accessible, and visually polished Tic-Tac-Toe game built with **HT
    git clone https://github.com/your-username/tic-tac-toe.git
    cd tic-tac-toe
 ```
-# Open index.html in your browser:
+## Open index.html in your browser:
 
 ```bash
 open index.html   # Mac
@@ -116,7 +116,7 @@ start index.html  # Windows
 Or simply double-click the file.
 
 
-# 📂 Project Structure
+## 📂 Project Structure
 ```bash
 
 ├── index.html       # Main game interface
@@ -124,7 +124,7 @@ Or simply double-click the file.
 └── (Optional: Add styles.css and script.js if separating code)
 ```
 
-# 🔧 Future Improvements
+## 🔧 Future Improvements
 a)Add AI opponent (Minimax)
 
 b)Implement player vs player over network (WebSockets)
@@ -133,10 +133,10 @@ c)Add scoreboard / history tracker
 
 d)Save game state using localStorage
 
-# 🤝 Contributing
+## 🤝 Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
 
-# 📄 License
+## 📄 License
 MIT
 
 ## Built with ❤️ by rakshanakrish
