@@ -71,3 +71,82 @@ d)Open a pull request
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
+2)Tic-Tac-Toe Game
+
+A responsive, accessible, and visually polished Tic-Tac-Toe game built with **HTML**, **CSS**, and **JavaScript**. Play as X or O, track the turn, highlight winning moves, and enjoy a smooth UI experience!
+
+![Game-preview](https://user-images.githubusercontent.com/your-username/your-image.png) <!-- Replace with actual image URL if available -->
+
+## ✨ Features
+
+- ✅ Clean and modern UI using CSS gradients and blur effects
+- ♿️ Fully accessible:
+  - Keyboard navigation
+  - ARIA roles and labels
+  - Live region updates
+- 🔁 Restart functionality with animated reset
+- 🔍 Visual indicators for:
+  - Player turn
+  - Draw
+  - Win (highlighted cells)
+- 🎯 Mobile responsive layout
+
+## 📦 Tech Stack
+
+- **HTML5** for structure
+- **CSS3** for styling and layout
+- **Vanilla JavaScript** for game logic and interactivity
+- **SVG graphics** for smooth and scalable player marks (X/O)
+
+## 🚀 Getting Started
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/tic-tac-toe.git
+   cd tic-tac-toe
+Open index.html in your browser:
+
+bash
+Copy
+Edit
+open index.html   # Mac
+start index.html  # Windows
+Or simply double-click the file.
+
+🖥️ Live Demo
+Want to play without cloning? Check it out live here:
+🔗 Live Demo <!-- Replace with real link -->
+
+📂 Project Structure
+bash
+Copy
+Edit
+├── index.html       # Main game interface
+├── README.md        # Project documentation
+└── (Optional: Add styles.css and script.js if separating code)
+🔧 Future Improvements
+Add AI opponent (Minimax)
+
+Implement player vs player over network (WebSockets)
+
+Add scoreboard / history tracker
+
+Save game state using localStorage
+
+🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
+
+📄 License
+MIT
+
+Built with ❤️ by rakshanakrish
+
+
+
+
+
+
+
+
+
