@@ -1,3 +1,4 @@
+1) Sentimental_Bot
 ```bash
 # Micro-IT-Internship
 
@@ -47,29 +48,26 @@ Install the required libraries (if you are using a local environment):
 pip install -r requirements.txt
 ```
 Usage
-Running the Notebook:
+a)Running the Notebook:
 Open the Sentimental_Bot.ipynb notebook in Jupyter or Google Colab and run the cells sequentially.
 
-Input Text:
+b)Input Text:
 Provide a text input (e.g., a sentence or paragraph) to see the sentiment prediction.
 
-Training the Model:
+c)Training the Model:
 The model will train on the given dataset. Once the model is trained, it will give you accuracy metrics on how well it performs.
 
 Contributing
 Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request. Here’s how you can contribute:
 
-Fork the repository
+a)Fork the repository
 
-Create a new branch
+b)Create a new branch
 
-Make your changes
+c)Make your changes
 
-Open a pull request
+d)Open a pull request
 
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-yaml
-Copy
-Edit
