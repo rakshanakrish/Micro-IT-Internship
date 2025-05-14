@@ -39,7 +39,7 @@ Before you begin, ensure you have met the following requirements:
 
 1. Clone the repository to your local machine or use it directly in Google Colab:
 
-bash```
+bash
 git clone https://github.com/rakshanakrish/Micro-IT-Internship.git
 ```
 Install the required libraries (if you are using a local environment):
